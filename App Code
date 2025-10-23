@@ -1,0 +1,342 @@
+import React from "react";
+import {
+    Text,
+    Button,
+    Card,
+    CardHeader,
+    CardFooter,
+    Divider,
+    Link,
+    makeStyles,
+    shorthands,
+} from "@fluentui/react-components";
+import {
+    InfoRegular,
+    DocumentBulletListRegular,
+    DocumentDataRegular,
+    ShareRegular,
+    HomeRegular,
+} from "@fluentui/react-icons";
+
+// Econo Lodge brand colors
+const ECONO_RED = "#E31837";
+const ECONO_YELLOW = "#FFD100";
+const ECONO_WHITE = "#FFFFFF";
+const ECONO_BLACK = "#222222";
+
+// Example reminders and forms (static for now)
+const reminders = [
+    {
+        id: "1",
+        title: "Submit monthly report",
+        description: "Don't forget to submit your monthly report by the 5th.",
+        icon: <InfoRegular fontSize="32px" aria-label="Reminder" />,
+        color: ECONO_YELLOW,
+    },
+    {
+        id: "2",
+        title: "Review compliance checklist",
+        description: "Ensure all compliance items are reviewed before Friday.",
+        icon: <DocumentBulletListRegular fontSize="32px" aria-label="Checklist" />,
+        color: ECONO_RED,
+    },
+    {
+        id: "3",
+        title: "Team meeting at 10am",
+        description: "Join the team sync meeting via Teams.",
+        icon: <ShareRegular fontSize="32px" aria-label="Meeting" />,
+        color: ECONO_YELLOW,
+    },
+];
+
+const forms = [
+    {
+        id: "form1",
+        title: "Expense Reimbursement",
+        description: "Submit your expense reimbursement form.",
+        icon: <DocumentDataRegular fontSize="32px" aria-label="Expense Form" />,
+        link: "#expense-form",
+        color: ECONO_RED,
+    },
+    {
+        id: "form2",
+        title: "Leave Application",
+        description: "Apply for leave using this form.",
+        icon: <DocumentBulletListRegular fontSize="32px" aria-label="Leave Form" />,
+        link: "#leave-form",
+        color: ECONO_YELLOW,
+    },
+    {
+        id: "form3",
+        title: "New Project Request",
+        description: "Request approval for a new project.",
+        icon: <HomeRegular fontSize="32px" aria-label="Project Form" />,
+        link: "#project-form",
+        color: ECONO_RED,
+    },
+];
+
+// Styles
+const useStyles = makeStyles({
+    root: {
+        display: "flex",
+        flexDirection: "column",
+        flexGrow: 1,
+        alignSelf: "stretch",
+        width: "100%",
+        height: "100%",
+        boxSizing: "border-box",
+        padding: "24px",
+        background: `linear-gradient(135deg, ${ECONO_YELLOW} 0%, ${ECONO_RED} 100%)`,
+        overflow: "hidden",
+        gap: "24px",
+        transition: "background 0.5s",
+    },
+    header: {
+        marginBottom: "8px",
+        padding: "16px 0",
+        background: `linear-gradient(90deg, ${ECONO_RED} 0%, ${ECONO_YELLOW} 100%)`,
+        borderRadius: "12px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+    },
+    section: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+        background: `linear-gradient(120deg, ${ECONO_WHITE} 0%, ${ECONO_YELLOW} 100%)`,
+        borderRadius: "16px",
+        boxShadow: "0 4px 16px rgba(0,0,0,0.10)",
+        padding: "24px",
+        boxSizing: "border-box",
+        flex: "1 1 0",
+        minHeight: 0,
+        transition: "background 0.5s",
+    },
+    cardsContainer: {
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "20px",
+        width: "100%",
+        minHeight: 0,
+    },
+    card: {
+        minWidth: "220px",
+        maxWidth: "320px",
+        flex: "1 1 220px",
+        boxSizing: "border-box",
+        background: `linear-gradient(120deg, ${ECONO_WHITE} 70%, ${ECONO_YELLOW} 100%)`,
+        borderRadius: "16px",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.10)",
+        border: `3px solid ${ECONO_RED}`,
+        transition: "box-shadow 0.2s, transform 0.2s, border-color 0.3s",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        position: "relative",
+        "&:hover": {
+            boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+            transform: "scale(1.04)",
+            borderColor: ECONO_YELLOW,
+        },
+    },
+    cardHeader: {
+        display: "flex",
+        alignItems: "center",
+        gap: "16px",
+        marginBottom: "8px",
+        paddingBottom: "6px",
+        borderBottom: `1px solid ${ECONO_YELLOW}`,
+    },
+    iconCircle: {
+        width: "48px",
+        height: "48px",
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+        background: `linear-gradient(135deg, ${ECONO_RED} 0%, ${ECONO_YELLOW} 100%)`,
+        transition: "background 0.3s",
+    },
+    cardTitle: {
+        fontWeight: 700,
+        fontSize: "1.15rem",
+        color: ECONO_BLACK,
+        letterSpacing: "0.02em",
+    },
+    cardDesc: {
+        color: ECONO_BLACK,
+        fontSize: "1rem",
+        marginTop: "2px",
+    },
+    cardFooter: {
+        marginTop: "16px",
+        display: "flex",
+        justifyContent: "flex-end",
+    },
+    divider: {
+        margin: "16px 0",
+        borderTop: `3px solid ${ECONO_RED}`,
+        borderRadius: "2px",
+        background: `linear-gradient(90deg, ${ECONO_RED} 0%, ${ECONO_YELLOW} 100%)`,
+        height: "6px",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+    },
+    linkButton: {
+        width: "100%",
+        marginTop: "8px",
+        background: `linear-gradient(90deg, ${ECONO_RED} 0%, ${ECONO_YELLOW} 100%)`,
+        color: ECONO_WHITE,
+        fontWeight: 600,
+        letterSpacing: "0.01em",
+        borderRadius: "8px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+        transition: "background 0.3s, box-shadow 0.2s",
+        "&:hover": {
+            background: `linear-gradient(90deg, ${ECONO_YELLOW} 0%, ${ECONO_RED} 100%)`,
+            boxShadow: "0 4px 16px rgba(0,0,0,0.16)",
+        },
+    },
+    sectionTitle: {
+        fontWeight: 700,
+        fontSize: "1.3rem",
+        marginBottom: "8px",
+        color: ECONO_RED,
+        letterSpacing: "0.03em",
+        textShadow: "0 1px 4px rgba(0,0,0,0.10)",
+    },
+    "@media (max-width: 768px)": {
+        root: {
+            padding: "12px",
+            gap: "16px",
+        },
+        section: {
+            padding: "12px",
+            gap: "12px",
+        },
+        cardsContainer: {
+            flexDirection: "column",
+            gap: "12px",
+        },
+        card: {
+            minWidth: "100%",
+            maxWidth: "100%",
+        },
+    },
+});
+
+// Dashboard header
+function DashboardHeader() {
+    const classes = useStyles();
+    return (
+        <header className={classes.header}>
+            <Text as="h1" size={800} weight="bold" block style={{ color: ECONO_WHITE, textShadow: "0 2px 8px rgba(0,0,0,0.10)" }}>
+                Dashboard
+            </Text>
+            <Text size={400} block style={{ color: ECONO_WHITE, marginTop: "4px" }}>
+                Welcome! Here are your important reminders and quick links to forms.
+            </Text>
+        </header>
+    );
+}
+
+// Reminders section
+function RemindersSection() {
+    const classes = useStyles();
+    return (
+        <section className={classes.section} aria-labelledby="reminders-title">
+            <Text as="h2" size={600} weight="bold" className={classes.sectionTitle} id="reminders-title">
+                Important Reminders
+            </Text>
+            <div className={classes.cardsContainer} style={{ overflowX: "auto", minHeight: 0 }}>
+                {reminders.map((reminder) => (
+                    <Card key={reminder.id} className={classes.card} size="small" orientation="vertical">
+                        <CardHeader
+                            className={classes.cardHeader}
+                            header={
+                                <span className={classes.cardTitle}>{reminder.title}</span>
+                            }
+                            description={
+                                <span className={classes.cardDesc}>{reminder.description}</span>
+                            }
+                            avatar={
+                                <span
+                                    className={classes.iconCircle}
+                                    style={{
+                                        background: `linear-gradient(135deg, ${reminder.color} 0%, ${ECONO_RED} 100%)`,
+                                    }}
+                                >
+                                    {reminder.icon}
+                                </span>
+                            }
+                        />
+                    </Card>
+                ))}
+            </div>
+        </section>
+    );
+}
+
+// Forms section
+function FormsSection() {
+    const classes = useStyles();
+    return (
+        <section className={classes.section} aria-labelledby="forms-title">
+            <Text as="h2" size={600} weight="bold" className={classes.sectionTitle} id="forms-title">
+                Quick Links to Forms
+            </Text>
+            <div className={classes.cardsContainer} style={{ overflowX: "auto", minHeight: 0 }}>
+                {forms.map((form) => (
+                    <Card key={form.id} className={classes.card} size="small" orientation="vertical">
+                        <CardHeader
+                            className={classes.cardHeader}
+                            header={
+                                <span className={classes.cardTitle}>{form.title}</span>
+                            }
+                            description={
+                                <span className={classes.cardDesc}>{form.description}</span>
+                            }
+                            avatar={
+                                <span
+                                    className={classes.iconCircle}
+                                    style={{
+                                        background: `linear-gradient(135deg, ${form.color} 0%, ${ECONO_RED} 100%)`,
+                                    }}
+                                >
+                                    {form.icon}
+                                </span>
+                            }
+                        />
+                        <CardFooter className={classes.cardFooter}>
+                            <Button
+                                appearance="primary"
+                                icon={<DocumentBulletListRegular fontSize="20px" aria-label="Open form" />}
+                                className={classes.linkButton}
+                                onClick={() => window.location.href = form.link}
+                                aria-label={`Open ${form.title} form`}
+                            >
+                                Open Form
+                            </Button>
+                        </CardFooter>
+                    </Card>
+                ))}
+            </div>
+        </section>
+    );
+}
+
+// Main dashboard component
+const GeneratedComponent = () => {
+    const classes = useStyles();
+
+    return (
+        <div className={classes.root}>
+            <DashboardHeader />
+            <RemindersSection />
+            <Divider className={classes.divider} />
+            <FormsSection />
+        </div>
+    );
+};
+
+export default GeneratedComponent;
